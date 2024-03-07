@@ -4,6 +4,8 @@
 	"description": "Client for the stablenotes protocol",
 	"main": "index.js",
 	"types": "./dist/index.d.ts",
+	"repository": "github:FinplexAu/stablenotes-client",
+	"license": "Apache-2.0",
 	"exports": {
 		".": {
 			"require": "./dist/index.js",
@@ -15,9 +17,6 @@
 		"generate": "pnpm openapi-typescript ./openapi.json -o ./src/api.d.ts -t",
 		"build": "pnpm tsup"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
 	"dependencies": {
 		"openapi-fetch": "^0.9.3"
 	},
@@ -27,5 +26,34 @@
 		"openapi-typescript-codegen": "^0.27.0",
 		"tsup": "^8.0.2",
 		"typescript": "^5.3.3"
+	},
+	"keywords": [
+		"stablenotes",
+		"stable",
+		"notes",
+		"cash",
+		"splash",
+		"client",
+		"typescript",
+		"node",
+		"web",
+		"browser"
+	],
+	"homepage": "https://github.com/FinplexAu/stablenotes-client",
+	"bugs": {
+		"url": "https://github.com/FinplexAu/stablenotes-client/issues"
+	},
+	"author": {
+		"name": "Eamon Heffernan",
+		"email": "eamon.heffernan@finplex.com.au"
+	},
+	"contributors": [
+		{
+			"name": "Nick Exon",
+			"email": "nick.exon@finplex.com.au"
+		}
+	],
+	"engines": {
+		"node": ">=16"
 	}
 }
