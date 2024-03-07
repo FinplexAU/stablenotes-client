@@ -1,14 +1,14 @@
 {
-	"name": "stablenotes-client",
+	"name": "@stablenotes/client",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./build/index.d.ts",
-			"require": "./build/index.js",
-			"import": "./build/index.mjs",
-			"default": "./build/index.mjs"
+			"require": "./dist/index.js",
+			"import": "./dist/index.mjs",
+			"default": "./dist/index.mjs"
 		}
 	},
 	"scripts": {
