@@ -1,0 +1,7 @@
+.github/
+.git/
+node_modules/
+.gitignore
+.prettierrc
+tsup.config.ts
+tsconfig.json
