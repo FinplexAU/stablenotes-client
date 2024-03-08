@@ -1,1 +1,1737 @@
-{"openapi":"3.0.0","info":{"version":"1.0.0","title":"StableNotes Api"},"components":{"schemas":{"ERROR_INSUFFICIENT_FUNDS":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["INSUFFICIENT_FUNDS"]},"message":{"type":"string","enum":["Wallet did not have sufficient funds to complete this transfer"]},"details":{"type":"object","properties":{"currentBalance":{"type":"integer"}},"required":["currentBalance"]}},"required":["status","code","message","details"]},"ERROR_INVALID_IAT":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["INVALID_IAT"]},"message":{"type":"string","enum":["\"iat\" field was expired or too far in the future"]}},"required":["status","code","message"]},"ERROR_INVALID_JSON":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["INVALID_JSON"]},"message":{"type":"string","enum":["Malformed JSON"]},"details":{"type":"object","properties":{"error":{"type":"string"}}}},"required":["status","code","message","details"]},"ERROR_INVALID_PUBLIC_KEY":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["INVALID_PUBLIC_KEY"]},"message":{"type":"string","enum":["Public key provided is not valid. Must be a public key formatted with DER and encoded with PKCS1"]},"details":{"type":"object","properties":{"publicKey":{"type":"string"}},"required":["publicKey"]}},"required":["status","code","message","details"]},"ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["INVALID_PUBLIC_KEY_MODULUS_LENGTH"]},"message":{"type":"string","enum":["Public key provided must have a modulus length of 2048"]},"details":{"type":"object","properties":{"publicKey":{"type":"string"},"modulusLength":{"type":"number"}},"required":["publicKey"]}},"required":["status","code","message","details"]},"ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["INVALID_SIGNATURE_ALGORITHM_HEADER"]},"message":{"type":"string","enum":["If header \"Signature-Algorithm\" is set, it must be set to one of the following: \"RSA-SHA256\", \"RSA-SHA384\", \"RSA-SHA512\""]},"details":{"type":"object","properties":{"value":{"type":"string"}},"required":["value"]}},"required":["status","code","message","details"]},"ERROR_MATCHING_SENDER_AND_RECIPIENT":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["MATCHING_SENDER_AND_RECIPIENT"]},"message":{"type":"string","enum":["The sender and recipient of transaction were the same wallet"]},"details":{"type":"object","properties":{"walletId":{"type":"string"}},"required":["walletId"]}},"required":["status","code","message","details"]},"ERROR_NO_BALANCE_ID_HEADER":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["NO_BALANCE_ID_HEADER"]},"message":{"type":"string","enum":["Header \"Balance-Id\" must be set"]}},"required":["status","code","message"]},"ERROR_NO_SIGNATURE_HEADER":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["NO_SIGNATURE_HEADER"]},"message":{"type":"string","enum":["Header \"Signature\" must be set"]}},"required":["status","code","message"]},"ERROR_TRANSFER_MISMATCHING_CURRENCY":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["TRANSFER_MISMATCHING_CURRENCY"]},"message":{"type":"string","enum":["Both sides of a transfer must have the same currency"]},"details":{"type":"object","properties":{"sendingCurrency":{"type":"string"},"receivingCurrency":{"type":"string"}},"required":["sendingCurrency","receivingCurrency"]}},"required":["status","code","message","details"]},"ERROR_TRANSFER_RECIPIENT_NOT_FOUND":{"type":"object","properties":{"status":{"type":"number","enum":[400]},"code":{"type":"string","enum":["TRANSFER_RECIPIENT_NOT_FOUND"]},"message":{"type":"string","enum":["Failed to find recipient for transfer"]},"details":{"type":"object","properties":{"recipientId":{"type":"string","format":"uuid"}},"required":["recipientId"]}},"required":["status","code","message","details"]},"ERROR_UNAUTHORIZED":{"type":"object","properties":{"status":{"type":"number","enum":[401]},"code":{"type":"string","enum":["UNAUTHORIZED"]},"message":{"type":"string","enum":["Unauthorized"]}},"required":["status","code","message"]},"ERROR_PAGE_NOT_FOUND":{"type":"object","properties":{"status":{"type":"number","enum":[404]},"code":{"type":"string","enum":["PAGE_NOT_FOUND"]},"message":{"type":"string","enum":["Page requested was not found"]},"details":{"type":"object","properties":{"page":{"type":"string"}},"required":["page"]}},"required":["status","code","message","details"]},"ERROR_RECIPIENT_ID_NOT_FOUND":{"type":"object","properties":{"status":{"type":"number","enum":[404]},"code":{"type":"string","enum":["RECIPIENT_ID_NOT_FOUND"]},"message":{"type":"string","enum":["Recipient id was not found"]},"details":{"type":"object","properties":{"id":{"type":"string"}},"required":["id"]}},"required":["status","code","message","details"]},"ERROR_TRANSFER_REQUEST_NOT_FOUND":{"type":"object","properties":{"status":{"type":"number","enum":[404]},"code":{"type":"string","enum":["TRANSFER_REQUEST_NOT_FOUND"]},"message":{"type":"string","enum":["Transfer request was not found"]},"details":{"type":"object","properties":{"id":{"type":"string"}},"required":["id"]}},"required":["status","code","message","details"]},"ERROR_INVALID_APPLICATION_TYPE":{"type":"object","properties":{"status":{"type":"number","enum":[415]},"code":{"type":"string","enum":["INVALID_APPLICATION_TYPE"]},"message":{"type":"string","enum":["Header \"Content-Type\" must be set to \"application/json\""]}},"required":["status","code","message"]},"ERROR_INVALID_BODY":{"type":"object","properties":{"status":{"type":"number","enum":[422]},"code":{"type":"string","enum":["INVALID_BODY"]},"message":{"type":"string","enum":["Body does not match the expected schema"]},"details":{"type":"object","properties":{"fieldErrors":{"type":"object","additionalProperties":{"type":"array","items":{"type":"string"}}},"formErrors":{"type":"array","items":{"type":"string"}}},"required":["fieldErrors","formErrors"]}},"required":["status","code","message","details"]},"ERROR_INTERNAL_SERVER_ERROR":{"type":"object","properties":{"status":{"type":"number","enum":[500]},"code":{"type":"string","enum":["INTERNAL_SERVER_ERROR"]},"message":{"type":"string","enum":["Internal server error occurred"]}},"required":["status","code","message"]},"Currency":{"type":"string","enum":["USD","GBP"]}},"parameters":{}},"paths":{"/v1/register":{"post":{"summary":"Register Wallet","tags":["Wallet"],"requestBody":{"content":{"application/json":{"schema":{"type":"object","properties":{"publicKey":{"type":"string","minLength":360,"maxLength":360,"pattern":"^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$","description":"Base64 string of the modulo 2048 public key in DER format encoded with PKCS1"},"currency":{"$ref":"#/components/schemas/Currency"}},"required":["publicKey","currency"]}}}},"responses":{"200":{"description":"200 Response","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","format":"uuid"}},"required":["id"]}}}},"400":{"description":"400","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INSUFFICIENT_FUNDS"},{"$ref":"#/components/schemas/ERROR_INVALID_IAT"},{"$ref":"#/components/schemas/ERROR_INVALID_JSON"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"},{"$ref":"#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"},{"$ref":"#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"},{"$ref":"#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"},{"$ref":"#/components/schemas/ERROR_NO_SIGNATURE_HEADER"},{"$ref":"#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"},{"$ref":"#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"}]}}}},"401":{"description":"401","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_UNAUTHORIZED"}]}}}},"404":{"description":"404","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_PAGE_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"}]}}}},"415":{"description":"415","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"}]}}}},"422":{"description":"422","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_BODY"}]}}}},"500":{"description":"500","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"}]}}}}}}},"/v1/balance":{"post":{"summary":"Get Balance","tags":["Wallet"],"parameters":[{"schema":{"type":"string","description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""},"required":true,"description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"","name":"Signature","in":"header"},{"schema":{"type":"string","enum":["RSA-SHA256","RSA-SHA384","RSA-SHA512"],"default":"RSA-SHA512","description":"The algorithm used for signing the body"},"required":false,"description":"The algorithm used for signing the body","name":"Signature-Algorithm","in":"header"},{"schema":{"type":"string","format":"uuid","description":"The id of the wallet being accessed"},"required":true,"description":"The id of the wallet being accessed","name":"Wallet-Id","in":"header"}],"requestBody":{"content":{"application/json":{"schema":{"type":"object","properties":{"iat":{"type":"number"}},"required":["iat"]}}}},"responses":{"200":{"description":"200 Response","content":{"application/json":{"schema":{"type":"object","properties":{"balance":{"type":"integer","minimum":0,"description":"Balance in cents"},"currency":{"$ref":"#/components/schemas/Currency"}},"required":["balance","currency"]}}}},"400":{"description":"400","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INSUFFICIENT_FUNDS"},{"$ref":"#/components/schemas/ERROR_INVALID_IAT"},{"$ref":"#/components/schemas/ERROR_INVALID_JSON"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"},{"$ref":"#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"},{"$ref":"#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"},{"$ref":"#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"},{"$ref":"#/components/schemas/ERROR_NO_SIGNATURE_HEADER"},{"$ref":"#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"},{"$ref":"#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"}]}}}},"401":{"description":"401","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_UNAUTHORIZED"}]}}}},"404":{"description":"404","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_PAGE_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"}]}}}},"415":{"description":"415","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"}]}}}},"422":{"description":"422","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_BODY"}]}}}},"500":{"description":"500","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"}]}}}}}}},"/v1/transfer":{"post":{"summary":"Transfer to a recipient","tags":["Transfer"],"parameters":[{"schema":{"type":"string","description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""},"required":true,"description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"","name":"Signature","in":"header"},{"schema":{"type":"string","enum":["RSA-SHA256","RSA-SHA384","RSA-SHA512"],"default":"RSA-SHA512","description":"The algorithm used for signing the body"},"required":false,"description":"The algorithm used for signing the body","name":"Signature-Algorithm","in":"header"},{"schema":{"type":"string","format":"uuid","description":"The id of the wallet being accessed"},"required":true,"description":"The id of the wallet being accessed","name":"Wallet-Id","in":"header"}],"requestBody":{"content":{"application/json":{"schema":{"type":"object","properties":{"iat":{"type":"number"},"amount":{"type":"integer","minimum":0,"description":"Amount to transfer in cents"},"recipient":{"type":"string","format":"uuid"}},"required":["iat","amount","recipient"]}}}},"responses":{"200":{"description":"200","content":{"application/json":{"schema":{"type":"object","properties":{"walletBalance":{"type":"integer","minimum":0,"description":"New wallet balance after transaction"}},"required":["walletBalance"]}}}},"400":{"description":"400","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INSUFFICIENT_FUNDS"},{"$ref":"#/components/schemas/ERROR_INVALID_IAT"},{"$ref":"#/components/schemas/ERROR_INVALID_JSON"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"},{"$ref":"#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"},{"$ref":"#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"},{"$ref":"#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"},{"$ref":"#/components/schemas/ERROR_NO_SIGNATURE_HEADER"},{"$ref":"#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"},{"$ref":"#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"}]}}}},"401":{"description":"401","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_UNAUTHORIZED"}]}}}},"404":{"description":"404","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_PAGE_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"}]}}}},"415":{"description":"415","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"}]}}}},"422":{"description":"422","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_BODY"}]}}}},"500":{"description":"500","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"}]}}}}}}},"/v1/recipient":{"post":{"summary":"Create recipient id","tags":["Transfer"],"parameters":[{"schema":{"type":"string","description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""},"required":true,"description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"","name":"Signature","in":"header"},{"schema":{"type":"string","enum":["RSA-SHA256","RSA-SHA384","RSA-SHA512"],"default":"RSA-SHA512","description":"The algorithm used for signing the body"},"required":false,"description":"The algorithm used for signing the body","name":"Signature-Algorithm","in":"header"},{"schema":{"type":"string","format":"uuid","description":"The id of the wallet being accessed"},"required":true,"description":"The id of the wallet being accessed","name":"Wallet-Id","in":"header"}],"requestBody":{"content":{"application/json":{"schema":{"type":"object","properties":{"iat":{"type":"number"}},"required":["iat"]}}}},"responses":{"200":{"description":"200","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","format":"uuid","description":"Recipient id to provide to other party"}},"required":["id"]}}}},"400":{"description":"400","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INSUFFICIENT_FUNDS"},{"$ref":"#/components/schemas/ERROR_INVALID_IAT"},{"$ref":"#/components/schemas/ERROR_INVALID_JSON"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"},{"$ref":"#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"},{"$ref":"#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"},{"$ref":"#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"},{"$ref":"#/components/schemas/ERROR_NO_SIGNATURE_HEADER"},{"$ref":"#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"},{"$ref":"#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"}]}}}},"401":{"description":"401","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_UNAUTHORIZED"}]}}}},"404":{"description":"404","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_PAGE_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"}]}}}},"415":{"description":"415","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"}]}}}},"422":{"description":"422","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_BODY"}]}}}},"500":{"description":"500","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"}]}}}}}}},"/v1/recipient/{id}":{"get":{"summary":"Recipient Info","tags":["Transfer"],"parameters":[{"schema":{"type":"string","format":"uuid","description":"Recipient id"},"required":true,"description":"Recipient id","name":"id","in":"path"}],"responses":{"200":{"description":"200 Response","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","format":"uuid","description":"Recipient id"},"currency":{"$ref":"#/components/schemas/Currency"}},"required":["id","currency"]}}}},"400":{"description":"400","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INSUFFICIENT_FUNDS"},{"$ref":"#/components/schemas/ERROR_INVALID_IAT"},{"$ref":"#/components/schemas/ERROR_INVALID_JSON"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"},{"$ref":"#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"},{"$ref":"#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"},{"$ref":"#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"},{"$ref":"#/components/schemas/ERROR_NO_SIGNATURE_HEADER"},{"$ref":"#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"},{"$ref":"#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"}]}}}},"401":{"description":"401","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_UNAUTHORIZED"}]}}}},"404":{"description":"404","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_PAGE_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"}]}}}},"415":{"description":"415","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"}]}}}},"422":{"description":"422","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_BODY"}]}}}},"500":{"description":"500","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"}]}}}}}}},"/v1/transfer-request/{id}":{"get":{"summary":"Transfer request info","tags":["Transfer Request"],"parameters":[{"schema":{"type":"string","format":"uuid","description":"Transfer request id"},"required":true,"description":"Transfer request id","name":"id","in":"path"}],"responses":{"200":{"description":"200 Response","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","format":"uuid","description":"Transfer id"},"amount":{"type":"integer","minimum":0,"description":"Amount requested in cents"},"currency":{"allOf":[{"$ref":"#/components/schemas/Currency"},{"description":"Currency of transfer request"}]}},"required":["id","amount","currency"]}}}},"400":{"description":"400","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INSUFFICIENT_FUNDS"},{"$ref":"#/components/schemas/ERROR_INVALID_IAT"},{"$ref":"#/components/schemas/ERROR_INVALID_JSON"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"},{"$ref":"#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"},{"$ref":"#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"},{"$ref":"#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"},{"$ref":"#/components/schemas/ERROR_NO_SIGNATURE_HEADER"},{"$ref":"#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"},{"$ref":"#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"}]}}}},"401":{"description":"401","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_UNAUTHORIZED"}]}}}},"404":{"description":"404","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_PAGE_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"}]}}}},"415":{"description":"415","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"}]}}}},"422":{"description":"422","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_BODY"}]}}}},"500":{"description":"500","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"}]}}}}}}},"/v1/transfer-request":{"post":{"summary":"Create transfer request","tags":["Transfer Request"],"parameters":[{"schema":{"type":"string","description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""},"required":true,"description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"","name":"Signature","in":"header"},{"schema":{"type":"string","enum":["RSA-SHA256","RSA-SHA384","RSA-SHA512"],"default":"RSA-SHA512","description":"The algorithm used for signing the body"},"required":false,"description":"The algorithm used for signing the body","name":"Signature-Algorithm","in":"header"},{"schema":{"type":"string","format":"uuid","description":"The id of the wallet being accessed"},"required":true,"description":"The id of the wallet being accessed","name":"Wallet-Id","in":"header"}],"requestBody":{"content":{"application/json":{"schema":{"type":"object","properties":{"iat":{"type":"number"},"amount":{"type":"integer","minimum":0,"description":"Amount to request in cents"}},"required":["iat","amount"]}}}},"responses":{"200":{"description":"200 Response","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","format":"uuid","description":"The id for the transfer request"},"amount":{"type":"integer","minimum":0,"description":"Amount of the transfer request in cents"}},"required":["id","amount"]}}}},"400":{"description":"400","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INSUFFICIENT_FUNDS"},{"$ref":"#/components/schemas/ERROR_INVALID_IAT"},{"$ref":"#/components/schemas/ERROR_INVALID_JSON"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"},{"$ref":"#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"},{"$ref":"#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"},{"$ref":"#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"},{"$ref":"#/components/schemas/ERROR_NO_SIGNATURE_HEADER"},{"$ref":"#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"},{"$ref":"#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"}]}}}},"401":{"description":"401","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_UNAUTHORIZED"}]}}}},"404":{"description":"404","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_PAGE_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"}]}}}},"415":{"description":"415","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"}]}}}},"422":{"description":"422","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_BODY"}]}}}},"500":{"description":"500","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"}]}}}}}}},"/v1/transfer-request/pay":{"post":{"summary":"Pay a transfer request","tags":["Transfer Request"],"parameters":[{"schema":{"type":"string","description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""},"required":true,"description":"Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"","name":"Signature","in":"header"},{"schema":{"type":"string","enum":["RSA-SHA256","RSA-SHA384","RSA-SHA512"],"default":"RSA-SHA512","description":"The algorithm used for signing the body"},"required":false,"description":"The algorithm used for signing the body","name":"Signature-Algorithm","in":"header"},{"schema":{"type":"string","format":"uuid","description":"The id of the wallet being accessed"},"required":true,"description":"The id of the wallet being accessed","name":"Wallet-Id","in":"header"}],"requestBody":{"content":{"application/json":{"schema":{"type":"object","properties":{"iat":{"type":"number"},"transferRequest":{"type":"string","format":"uuid"}},"required":["iat","transferRequest"]}}}},"responses":{"200":{"description":"200","content":{"application/json":{"schema":{"type":"object","properties":{"walletBalance":{"type":"integer","minimum":0,"description":"New wallet balance after transaction"}},"required":["walletBalance"]}}}},"400":{"description":"400","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INSUFFICIENT_FUNDS"},{"$ref":"#/components/schemas/ERROR_INVALID_IAT"},{"$ref":"#/components/schemas/ERROR_INVALID_JSON"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY"},{"$ref":"#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"},{"$ref":"#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"},{"$ref":"#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"},{"$ref":"#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"},{"$ref":"#/components/schemas/ERROR_NO_SIGNATURE_HEADER"},{"$ref":"#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"},{"$ref":"#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"}]}}}},"401":{"description":"401","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_UNAUTHORIZED"}]}}}},"404":{"description":"404","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_PAGE_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"},{"$ref":"#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"}]}}}},"415":{"description":"415","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"}]}}}},"422":{"description":"422","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INVALID_BODY"}]}}}},"500":{"description":"500","content":{"application/json":{"schema":{"anyOf":[{"$ref":"#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"}]}}}}}}}}}
+{
+	"openapi": "3.0.0",
+	"info": { "version": "1.0.0", "title": "StableNotes Api" },
+	"components": {
+		"schemas": {
+			"ERROR_INSUFFICIENT_FUNDS": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [400] },
+							"code": { "type": "string", "enum": ["INSUFFICIENT_FUNDS"] },
+							"message": {
+								"type": "string",
+								"enum": [
+									"Wallet did not have sufficient funds to complete this transfer"
+								]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": { "currentBalance": { "type": "integer" } },
+						"required": ["currentBalance"]
+					}
+				]
+			},
+			"ERROR_INVALID_IAT": {
+				"type": "object",
+				"properties": {
+					"status": { "type": "number", "enum": [400] },
+					"code": { "type": "string", "enum": ["INVALID_IAT"] },
+					"message": {
+						"type": "string",
+						"enum": ["\"iat\" field was expired or too far in the future"]
+					}
+				},
+				"required": ["status", "code", "message"]
+			},
+			"ERROR_INVALID_JSON": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [400] },
+							"code": { "type": "string", "enum": ["INVALID_JSON"] },
+							"message": { "type": "string", "enum": ["Malformed JSON"] }
+						},
+						"required": ["status", "code", "message"]
+					},
+					{ "type": "object", "properties": { "error": { "type": "string" } } }
+				]
+			},
+			"ERROR_INVALID_PUBLIC_KEY": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [400] },
+							"code": { "type": "string", "enum": ["INVALID_PUBLIC_KEY"] },
+							"message": {
+								"type": "string",
+								"enum": [
+									"Public key provided is not valid. Must be a public key formatted with DER and encoded with SKPI"
+								]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": { "publicKey": { "type": "string" } },
+						"required": ["publicKey"]
+					}
+				]
+			},
+			"ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [400] },
+							"code": {
+								"type": "string",
+								"enum": ["INVALID_PUBLIC_KEY_MODULUS_LENGTH"]
+							},
+							"message": {
+								"type": "string",
+								"enum": [
+									"Public key provided must have a modulus length of 2048"
+								]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": {
+							"publicKey": { "type": "string" },
+							"modulusLength": { "type": "number" }
+						},
+						"required": ["publicKey"]
+					}
+				]
+			},
+			"ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [400] },
+							"code": {
+								"type": "string",
+								"enum": ["INVALID_SIGNATURE_ALGORITHM_HEADER"]
+							},
+							"message": {
+								"type": "string",
+								"enum": [
+									"If header \"Signature-Algorithm\" is set, it must be set to one of the following: \"RSA-SHA256\", \"RSA-SHA384\", \"RSA-SHA512\""
+								]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": { "value": { "type": "string" } },
+						"required": ["value"]
+					}
+				]
+			},
+			"ERROR_MATCHING_SENDER_AND_RECIPIENT": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [400] },
+							"code": {
+								"type": "string",
+								"enum": ["MATCHING_SENDER_AND_RECIPIENT"]
+							},
+							"message": {
+								"type": "string",
+								"enum": [
+									"The sender and recipient of transaction were the same wallet"
+								]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": { "walletId": { "type": "string" } },
+						"required": ["walletId"]
+					}
+				]
+			},
+			"ERROR_NO_BALANCE_ID_HEADER": {
+				"type": "object",
+				"properties": {
+					"status": { "type": "number", "enum": [400] },
+					"code": { "type": "string", "enum": ["NO_BALANCE_ID_HEADER"] },
+					"message": {
+						"type": "string",
+						"enum": ["Header \"Balance-Id\" must be set"]
+					}
+				},
+				"required": ["status", "code", "message"]
+			},
+			"ERROR_NO_SIGNATURE_HEADER": {
+				"type": "object",
+				"properties": {
+					"status": { "type": "number", "enum": [400] },
+					"code": { "type": "string", "enum": ["NO_SIGNATURE_HEADER"] },
+					"message": {
+						"type": "string",
+						"enum": ["Header \"Signature\" must be set"]
+					}
+				},
+				"required": ["status", "code", "message"]
+			},
+			"ERROR_TRANSFER_MISMATCHING_CURRENCY": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [400] },
+							"code": {
+								"type": "string",
+								"enum": ["TRANSFER_MISMATCHING_CURRENCY"]
+							},
+							"message": {
+								"type": "string",
+								"enum": ["Both sides of a transfer must have the same currency"]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": {
+							"sendingCurrency": { "type": "string" },
+							"receivingCurrency": { "type": "string" }
+						},
+						"required": ["sendingCurrency", "receivingCurrency"]
+					}
+				]
+			},
+			"ERROR_TRANSFER_RECIPIENT_NOT_FOUND": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [400] },
+							"code": {
+								"type": "string",
+								"enum": ["TRANSFER_RECIPIENT_NOT_FOUND"]
+							},
+							"message": {
+								"type": "string",
+								"enum": ["Failed to find recipient for transfer"]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": {
+							"recipientId": { "type": "string", "format": "uuid" }
+						},
+						"required": ["recipientId"]
+					}
+				]
+			},
+			"ERROR_UNAUTHORIZED": {
+				"type": "object",
+				"properties": {
+					"status": { "type": "number", "enum": [401] },
+					"code": { "type": "string", "enum": ["UNAUTHORIZED"] },
+					"message": { "type": "string", "enum": ["Unauthorized"] }
+				},
+				"required": ["status", "code", "message"]
+			},
+			"ERROR_PAGE_NOT_FOUND": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [404] },
+							"code": { "type": "string", "enum": ["PAGE_NOT_FOUND"] },
+							"message": {
+								"type": "string",
+								"enum": ["Page requested was not found"]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": { "page": { "type": "string" } },
+						"required": ["page"]
+					}
+				]
+			},
+			"ERROR_RECIPIENT_ID_NOT_FOUND": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [404] },
+							"code": { "type": "string", "enum": ["RECIPIENT_ID_NOT_FOUND"] },
+							"message": {
+								"type": "string",
+								"enum": ["Recipient id was not found"]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": { "id": { "type": "string" } },
+						"required": ["id"]
+					}
+				]
+			},
+			"ERROR_TRANSFER_REQUEST_NOT_FOUND": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [404] },
+							"code": {
+								"type": "string",
+								"enum": ["TRANSFER_REQUEST_NOT_FOUND"]
+							},
+							"message": {
+								"type": "string",
+								"enum": ["Transfer request was not found"]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": { "id": { "type": "string" } },
+						"required": ["id"]
+					}
+				]
+			},
+			"ERROR_INVALID_APPLICATION_TYPE": {
+				"type": "object",
+				"properties": {
+					"status": { "type": "number", "enum": [415] },
+					"code": { "type": "string", "enum": ["INVALID_APPLICATION_TYPE"] },
+					"message": {
+						"type": "string",
+						"enum": [
+							"Header \"Content-Type\" must be set to \"application/json\""
+						]
+					}
+				},
+				"required": ["status", "code", "message"]
+			},
+			"ERROR_INVALID_BODY": {
+				"allOf": [
+					{
+						"type": "object",
+						"properties": {
+							"status": { "type": "number", "enum": [422] },
+							"code": { "type": "string", "enum": ["INVALID_BODY"] },
+							"message": {
+								"type": "string",
+								"enum": ["Body does not match the expected schema"]
+							}
+						},
+						"required": ["status", "code", "message"]
+					},
+					{
+						"type": "object",
+						"properties": {
+							"fieldErrors": {
+								"type": "object",
+								"additionalProperties": {
+									"type": "array",
+									"items": { "type": "string" }
+								}
+							},
+							"formErrors": { "type": "array", "items": { "type": "string" } }
+						},
+						"required": ["fieldErrors", "formErrors"]
+					}
+				]
+			},
+			"ERROR_INTERNAL_SERVER_ERROR": {
+				"type": "object",
+				"properties": {
+					"status": { "type": "number", "enum": [500] },
+					"code": { "type": "string", "enum": ["INTERNAL_SERVER_ERROR"] },
+					"message": {
+						"type": "string",
+						"enum": ["Internal server error occurred"]
+					}
+				},
+				"required": ["status", "code", "message"]
+			},
+			"Currency": { "type": "string", "enum": ["USD", "GBP"] }
+		},
+		"parameters": {}
+	},
+	"paths": {
+		"/v1/register": {
+			"post": {
+				"summary": "Register Wallet",
+				"tags": ["Wallet"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"publicKey": {
+										"type": "string",
+										"minLength": 392,
+										"maxLength": 392,
+										"pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+										"description": "Base64 string of the modulo 2048 public key in DER format encoded with SPKI"
+									},
+									"currency": { "$ref": "#/components/schemas/Currency" }
+								},
+								"required": ["publicKey", "currency"]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200 Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": { "type": "string", "format": "uuid" }
+									},
+									"required": ["id"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "400",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INSUFFICIENT_FUNDS" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_IAT" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_JSON" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY" },
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_SIGNATURE_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "401",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_UNAUTHORIZED" }
+									]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "404",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_PAGE_NOT_FOUND" },
+										{
+											"$ref": "#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"415": {
+						"description": "415",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"
+										}
+									]
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "422",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INVALID_BODY" }
+									]
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "500",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/balance": {
+			"post": {
+				"summary": "Get Balance",
+				"tags": ["Wallet"],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""
+						},
+						"required": true,
+						"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"",
+						"name": "Signature",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": ["RSA-SHA256", "RSA-SHA384", "RSA-SHA512"],
+							"default": "RSA-SHA512",
+							"description": "The algorithm used for signing the body"
+						},
+						"required": false,
+						"description": "The algorithm used for signing the body",
+						"name": "Signature-Algorithm",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"format": "uuid",
+							"description": "The id of the wallet being accessed"
+						},
+						"required": true,
+						"description": "The id of the wallet being accessed",
+						"name": "Wallet-Id",
+						"in": "header"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": { "iat": { "type": "number" } },
+								"required": ["iat"]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200 Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"balance": {
+											"type": "integer",
+											"minimum": 0,
+											"description": "Balance in cents"
+										},
+										"currency": { "$ref": "#/components/schemas/Currency" }
+									},
+									"required": ["balance", "currency"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "400",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INSUFFICIENT_FUNDS" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_IAT" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_JSON" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY" },
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_SIGNATURE_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "401",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_UNAUTHORIZED" }
+									]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "404",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_PAGE_NOT_FOUND" },
+										{
+											"$ref": "#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"415": {
+						"description": "415",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"
+										}
+									]
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "422",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INVALID_BODY" }
+									]
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "500",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/transfer": {
+			"post": {
+				"summary": "Transfer to a recipient",
+				"tags": ["Transfer"],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""
+						},
+						"required": true,
+						"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"",
+						"name": "Signature",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": ["RSA-SHA256", "RSA-SHA384", "RSA-SHA512"],
+							"default": "RSA-SHA512",
+							"description": "The algorithm used for signing the body"
+						},
+						"required": false,
+						"description": "The algorithm used for signing the body",
+						"name": "Signature-Algorithm",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"format": "uuid",
+							"description": "The id of the wallet being accessed"
+						},
+						"required": true,
+						"description": "The id of the wallet being accessed",
+						"name": "Wallet-Id",
+						"in": "header"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"iat": { "type": "number" },
+									"amount": {
+										"type": "integer",
+										"minimum": 0,
+										"description": "Amount to transfer in cents"
+									},
+									"recipient": { "type": "string", "format": "uuid" }
+								},
+								"required": ["iat", "amount", "recipient"]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"walletBalance": {
+											"type": "integer",
+											"minimum": 0,
+											"description": "New wallet balance after transaction"
+										}
+									},
+									"required": ["walletBalance"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "400",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INSUFFICIENT_FUNDS" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_IAT" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_JSON" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY" },
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_SIGNATURE_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "401",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_UNAUTHORIZED" }
+									]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "404",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_PAGE_NOT_FOUND" },
+										{
+											"$ref": "#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"415": {
+						"description": "415",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"
+										}
+									]
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "422",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INVALID_BODY" }
+									]
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "500",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/recipient": {
+			"post": {
+				"summary": "Create recipient id",
+				"tags": ["Transfer"],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""
+						},
+						"required": true,
+						"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"",
+						"name": "Signature",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": ["RSA-SHA256", "RSA-SHA384", "RSA-SHA512"],
+							"default": "RSA-SHA512",
+							"description": "The algorithm used for signing the body"
+						},
+						"required": false,
+						"description": "The algorithm used for signing the body",
+						"name": "Signature-Algorithm",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"format": "uuid",
+							"description": "The id of the wallet being accessed"
+						},
+						"required": true,
+						"description": "The id of the wallet being accessed",
+						"name": "Wallet-Id",
+						"in": "header"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": { "iat": { "type": "number" } },
+								"required": ["iat"]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid",
+											"description": "Recipient id to provide to other party"
+										}
+									},
+									"required": ["id"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "400",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INSUFFICIENT_FUNDS" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_IAT" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_JSON" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY" },
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_SIGNATURE_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "401",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_UNAUTHORIZED" }
+									]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "404",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_PAGE_NOT_FOUND" },
+										{
+											"$ref": "#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"415": {
+						"description": "415",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"
+										}
+									]
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "422",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INVALID_BODY" }
+									]
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "500",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/recipient/{id}": {
+			"get": {
+				"summary": "Recipient Info",
+				"tags": ["Transfer"],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"format": "uuid",
+							"description": "Recipient id"
+						},
+						"required": true,
+						"description": "Recipient id",
+						"name": "id",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "200 Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid",
+											"description": "Recipient id"
+										},
+										"currency": { "$ref": "#/components/schemas/Currency" }
+									},
+									"required": ["id", "currency"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "400",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INSUFFICIENT_FUNDS" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_IAT" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_JSON" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY" },
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_SIGNATURE_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "401",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_UNAUTHORIZED" }
+									]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "404",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_PAGE_NOT_FOUND" },
+										{
+											"$ref": "#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"415": {
+						"description": "415",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"
+										}
+									]
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "422",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INVALID_BODY" }
+									]
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "500",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/transfer-request/{id}": {
+			"get": {
+				"summary": "Transfer request info",
+				"tags": ["Transfer Request"],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"format": "uuid",
+							"description": "Transfer request id"
+						},
+						"required": true,
+						"description": "Transfer request id",
+						"name": "id",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "200 Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid",
+											"description": "Transfer id"
+										},
+										"amount": {
+											"type": "integer",
+											"minimum": 0,
+											"description": "Amount requested in cents"
+										},
+										"currency": {
+											"allOf": [
+												{ "$ref": "#/components/schemas/Currency" },
+												{ "description": "Currency of transfer request" }
+											]
+										}
+									},
+									"required": ["id", "amount", "currency"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "400",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INSUFFICIENT_FUNDS" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_IAT" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_JSON" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY" },
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_SIGNATURE_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "401",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_UNAUTHORIZED" }
+									]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "404",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_PAGE_NOT_FOUND" },
+										{
+											"$ref": "#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"415": {
+						"description": "415",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"
+										}
+									]
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "422",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INVALID_BODY" }
+									]
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "500",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/transfer-request": {
+			"post": {
+				"summary": "Create transfer request",
+				"tags": ["Transfer Request"],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""
+						},
+						"required": true,
+						"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"",
+						"name": "Signature",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": ["RSA-SHA256", "RSA-SHA384", "RSA-SHA512"],
+							"default": "RSA-SHA512",
+							"description": "The algorithm used for signing the body"
+						},
+						"required": false,
+						"description": "The algorithm used for signing the body",
+						"name": "Signature-Algorithm",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"format": "uuid",
+							"description": "The id of the wallet being accessed"
+						},
+						"required": true,
+						"description": "The id of the wallet being accessed",
+						"name": "Wallet-Id",
+						"in": "header"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"iat": { "type": "number" },
+									"amount": {
+										"type": "integer",
+										"minimum": 0,
+										"description": "Amount to request in cents"
+									}
+								},
+								"required": ["iat", "amount"]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200 Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid",
+											"description": "The id for the transfer request"
+										},
+										"amount": {
+											"type": "integer",
+											"minimum": 0,
+											"description": "Amount of the transfer request in cents"
+										}
+									},
+									"required": ["id", "amount"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "400",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INSUFFICIENT_FUNDS" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_IAT" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_JSON" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY" },
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_SIGNATURE_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "401",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_UNAUTHORIZED" }
+									]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "404",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_PAGE_NOT_FOUND" },
+										{
+											"$ref": "#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"415": {
+						"description": "415",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"
+										}
+									]
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "422",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INVALID_BODY" }
+									]
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "500",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/transfer-request/pay": {
+			"post": {
+				"summary": "Pay a transfer request",
+				"tags": ["Transfer Request"],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\""
+						},
+						"required": true,
+						"description": "Signature for the contents of the body signed with the private key. Algorithm defaults to RSA-SHA512, but can be set with the \"Signature-Algorithm header\"",
+						"name": "Signature",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": ["RSA-SHA256", "RSA-SHA384", "RSA-SHA512"],
+							"default": "RSA-SHA512",
+							"description": "The algorithm used for signing the body"
+						},
+						"required": false,
+						"description": "The algorithm used for signing the body",
+						"name": "Signature-Algorithm",
+						"in": "header"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"format": "uuid",
+							"description": "The id of the wallet being accessed"
+						},
+						"required": true,
+						"description": "The id of the wallet being accessed",
+						"name": "Wallet-Id",
+						"in": "header"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"iat": { "type": "number" },
+									"transferRequest": { "type": "string", "format": "uuid" }
+								},
+								"required": ["iat", "transferRequest"]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"walletBalance": {
+											"type": "integer",
+											"minimum": 0,
+											"description": "New wallet balance after transaction"
+										}
+									},
+									"required": ["walletBalance"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "400",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INSUFFICIENT_FUNDS" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_IAT" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_JSON" },
+										{ "$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY" },
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_PUBLIC_KEY_MODULUS_LENGTH"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_SIGNATURE_ALGORITHM_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_MATCHING_SENDER_AND_RECIPIENT"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_BALANCE_ID_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_NO_SIGNATURE_HEADER"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_MISMATCHING_CURRENCY"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_RECIPIENT_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "401",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_UNAUTHORIZED" }
+									]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "404",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_PAGE_NOT_FOUND" },
+										{
+											"$ref": "#/components/schemas/ERROR_RECIPIENT_ID_NOT_FOUND"
+										},
+										{
+											"$ref": "#/components/schemas/ERROR_TRANSFER_REQUEST_NOT_FOUND"
+										}
+									]
+								}
+							}
+						}
+					},
+					"415": {
+						"description": "415",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INVALID_APPLICATION_TYPE"
+										}
+									]
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "422",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{ "$ref": "#/components/schemas/ERROR_INVALID_BODY" }
+									]
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "500",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ERROR_INTERNAL_SERVER_ERROR"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
