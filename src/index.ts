@@ -11,7 +11,6 @@ const getCrypto = async (): Promise<Crypto> => {
 		return (await import("node:crypto")).webcrypto as Crypto;
 	}
 };
-const crypto = getCrypto();
 
 type ApiClient = ReturnType<typeof createClient<paths>>;
 
@@ -39,6 +38,7 @@ export class Client {
 	readonly baseUrl: string;
 	private client: ApiClient;
 	private wallet?: Wallet;
+	private crypto = getCrypto();
 
 	constructor(options: ClassOptions) {
 		this.baseUrl = options.baseUrl;
@@ -55,7 +55,7 @@ export class Client {
 					const body = await req.clone().arrayBuffer();
 					const alg = "RSA-SHA512";
 					const sig = await (
-						await crypto
+						await this.crypto
 					).subtle.sign("RSASSA-PKCS1-v1_5", this.wallet.privateKey, body);
 
 					req.headers.set("Wallet-Id", this.wallet.id);
@@ -72,7 +72,7 @@ export class Client {
 		let pk: CryptoKey;
 		if (privateKey) {
 			sk = privateKey;
-			const jwk = await (await crypto).subtle.exportKey("jwk", sk);
+			const jwk = await (await this.crypto).subtle.exportKey("jwk", sk);
 
 			delete jwk.d;
 			delete jwk.dp;
@@ -82,7 +82,7 @@ export class Client {
 			jwk.key_ops = ["verify"];
 
 			pk = await (
-				await crypto
+				await this.crypto
 			).subtle.importKey(
 				"jwk",
 				jwk,
@@ -95,7 +95,7 @@ export class Client {
 			);
 		} else {
 			const kp = await (
-				await crypto
+				await this.crypto
 			).subtle.generateKey(
 				{
 					name: "RSASSA-PKCS1-v1_5",
@@ -110,7 +110,7 @@ export class Client {
 			pk = kp.publicKey;
 		}
 
-		const out = await (await crypto).subtle.exportKey("spki", pk);
+		const out = await (await this.crypto).subtle.exportKey("spki", pk);
 		const b64 = arrayBufferToBase64(out);
 
 		const response = await this.client.POST("/v1/register", {
