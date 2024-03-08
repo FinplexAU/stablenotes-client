@@ -14,15 +14,15 @@ type ApiClient = ReturnType<typeof createClient<paths>>;
 
 export type Currency = components["schemas"]["Currency"];
 export type Wallet = {
-	privateKey: CryptoKey;
 	id: string;
+	privateKey: CryptoKey;
 };
 export type ClassOptions = {
 	baseUrl: string;
 	wallet?: Wallet;
 };
 
-function _arrayBufferToBase64(buffer: ArrayBuffer) {
+const arrayBufferToBase64 = (buffer: ArrayBuffer) => {
 	var binary = "";
 	var bytes = new Uint8Array(buffer);
 	var len = bytes.byteLength;
@@ -30,7 +30,7 @@ function _arrayBufferToBase64(buffer: ArrayBuffer) {
 		binary += String.fromCharCode(bytes[i]!);
 	}
 	return btoa(binary);
-}
+};
 
 export class Client {
 	readonly baseUrl: string;
@@ -47,7 +47,7 @@ export class Client {
 		}
 
 		this.client.use({
-			onRequest: async (req, options) => {
+			onRequest: async (req) => {
 				if (req.method !== "get" && this.wallet) {
 					const body = await req.clone().arrayBuffer();
 					const alg = "RSA-SHA512";
@@ -56,7 +56,7 @@ export class Client {
 					).subtle.sign("RSASSA-PKCS1-v1_5", this.wallet.privateKey, body);
 
 					req.headers.set("Wallet-Id", this.wallet.id);
-					req.headers.set("Signature", _arrayBufferToBase64(sig));
+					req.headers.set("Signature", arrayBufferToBase64(sig));
 					req.headers.set("Signature-Algorithm", alg);
 				}
 				return req;
@@ -108,7 +108,7 @@ export class Client {
 		}
 
 		const out = await (await crypto).subtle.exportKey("spki", pk);
-		const b64 = _arrayBufferToBase64(out);
+		const b64 = arrayBufferToBase64(out);
 
 		const response = await this.client.POST("/v1/register", {
 			body: {
@@ -118,13 +118,21 @@ export class Client {
 		});
 
 		if (response.data) {
-			this.wallet = { id: response.data.id, privateKey: sk };
+			const wallet = { id: response.data.id, privateKey: sk };
+			this.wallet = wallet;
+			return {
+				...response,
+				data: response.data
+					? {
+							...wallet,
+					  }
+					: undefined,
+			};
 		}
-
 		return response;
 	}
 
-	public async balance() {
+	public async getBalance() {
 		const response = await this.client.POST("/v1/balance", {
 			params: {
 				// The headers get set in the middleware
