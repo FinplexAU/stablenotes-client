@@ -16,7 +16,8 @@
 	"sideEffects": false,
 	"scripts": {
 		"generate": "pnpm openapi-typescript ./openapi.json -o ./src/api.d.ts -t",
-		"build": "pnpm tsup"
+		"build": "pnpm tsup",
+		"prepublish": "pnpm generate && pnpm build"
 	},
 	"dependencies": {
 		"openapi-fetch": "^0.9.3"
