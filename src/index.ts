@@ -5,6 +5,9 @@ const getCrypto = async (): Promise<Crypto> => {
 	if (globalThis.crypto) {
 		return Promise.resolve(globalThis.crypto);
 	} else {
+		if (typeof window === "undefined") {
+			throw new Error("WebCrypto not found while on a browser.");
+		}
 		return (await import("node:crypto")).webcrypto as Crypto;
 	}
 };
