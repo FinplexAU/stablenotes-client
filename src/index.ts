@@ -17,11 +17,20 @@ type ApiClient = ReturnType<typeof createClient<paths>>;
 export type Currency = components["schemas"]["Currency"];
 export type Wallet = {
 	id: string;
-	privateKey: CryptoKey;
+	privateKey: Promise<CryptoKey> | CryptoKey;
+};
+export type WalletInput = {
+	id: string;
+	privateKey:
+		| CryptoKey
+		| {
+				key: string;
+				encoding: "base64" | "hex";
+		  };
 };
 export type ClassOptions = {
 	baseUrl: string;
-	wallet?: Wallet;
+	wallet?: WalletInput;
 };
 
 const arrayBufferToBase64 = (buffer: ArrayBuffer) => {
@@ -32,6 +41,28 @@ const arrayBufferToBase64 = (buffer: ArrayBuffer) => {
 		binary += String.fromCharCode(bytes[i]!);
 	}
 	return btoa(binary);
+};
+const base64ToArrayBuffer = (base64: string) => {
+	var binaryString = atob(base64);
+	var bytes = new Uint8Array(binaryString.length);
+	for (var i = 0; i < binaryString.length; i++) {
+		bytes[i] = binaryString.charCodeAt(i);
+	}
+	return bytes.buffer;
+};
+const hexToArrayBuffer = (hex: string) => {
+	const matched = hex.match(/[\da-f]{2}/gi);
+	if (!matched) return new ArrayBuffer(0);
+	return new Uint8Array(
+		matched.map(function (h) {
+			return parseInt(h, 16);
+		})
+	).buffer;
+};
+const arrayBufferToHex = (buffer: ArrayBuffer) => {
+	return [...new Uint8Array(buffer)]
+		.map((x) => x.toString(16).padStart(2, "0"))
+		.join("");
 };
 
 export class Client {
@@ -46,7 +77,37 @@ export class Client {
 			baseUrl: this.baseUrl,
 		});
 		if (options?.wallet) {
-			this.wallet = { ...options.wallet };
+			if (options.wallet.privateKey instanceof CryptoKey) {
+				this.wallet = {
+					id: options.wallet.id,
+					privateKey: options.wallet.privateKey,
+				};
+			} else {
+				const pk = options.wallet.privateKey;
+				let key;
+
+				if (pk.encoding === "hex") {
+					key = hexToArrayBuffer(pk.key);
+				} else {
+					key = base64ToArrayBuffer(pk.key);
+				}
+
+				const privateKey = crypto.subtle.importKey(
+					"pkcs8",
+					key,
+					{
+						name: "RSASSA-PKCS1-v1_5",
+						hash: "SHA-512",
+					},
+					false,
+					["sign"]
+				);
+
+				this.wallet = {
+					id: options.wallet.id,
+					privateKey,
+				};
+			}
 		}
 
 		this.client.use({
@@ -54,9 +115,11 @@ export class Client {
 				if (req.method !== "get" && this.wallet) {
 					const body = await req.clone().arrayBuffer();
 					const alg = "RSA-SHA512";
+					const privateKey = await this.wallet.privateKey;
+
 					const sig = await (
 						await this.crypto
-					).subtle.sign("RSASSA-PKCS1-v1_5", this.wallet.privateKey, body);
+					).subtle.sign("RSASSA-PKCS1-v1_5", privateKey, body);
 
 					req.headers.set("Wallet-Id", this.wallet.id);
 					req.headers.set("Signature", arrayBufferToBase64(sig));
@@ -133,6 +196,20 @@ export class Client {
 			};
 		}
 		return response;
+	}
+
+	public async getWalletString(encoding: "hex" | "base64" = "hex") {
+		if (!this.wallet) {
+			return;
+		}
+
+		const pk = await this.wallet.privateKey;
+		const privateKey = await crypto.subtle.exportKey("pkcs8", pk);
+		if (encoding === "hex") {
+			return arrayBufferToHex(privateKey);
+		} else {
+			return arrayBufferToBase64(privateKey);
+		}
 	}
 
 	public async getBalance() {

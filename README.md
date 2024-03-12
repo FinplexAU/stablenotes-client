@@ -103,7 +103,7 @@ And if the response is unsuccessful
 
 ### `Client.register`
 
-To register a new wallet, call `client.register(Currency)`.
+To register a new wallet, call `Client.register(Currency)`.
 
 Allowed currencies are "GBP" and "USD"
 
@@ -120,7 +120,7 @@ if (result.data) {
 }
 ```
 
-Optionally, include an existing RSA private key to use for the wallet authentication with `client.register(Currency, CryptoKey)`.
+Optionally, include an existing RSA private key to use for the wallet authentication with `Client.register(Currency, CryptoKey)`.
 
 ```js
 // Get your private key, ensure it is a WebCrypto "CryptoKey" object
@@ -134,6 +134,31 @@ if (result.data) {
 if (result.error) {
 	console.error(result.error);
 }
+```
+
+Alternatively, the private key object can be an object with a hex or base64 encoded string as well as the encoding type. The string can be generated from `client.getWalletString`
+
+```js
+await client1.register("USD");
+const privateKeyHex = client1.getWalletString("hex");
+const privateKeyBase64 = client1.getWalletString("base64");
+
+// Register a client with the string
+await client2.register("USD", {
+	id: "00000000-0000-0000-0000-000000000000",
+	privateKey: {
+		key: privateKeyHex,
+		encoding: "hex",
+	},
+});
+// OR
+await client2.register("USD", {
+	id: "00000000-0000-0000-0000-000000000000",
+	privateKey: {
+		key: privateKeyBase64,
+		encoding: "base64",
+	},
+});
 ```
 
 ### `Client.getBalance`
