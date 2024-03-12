@@ -30,8 +30,17 @@ The client is fully typed and contains Typescript types in the bundle
 
 ```sh
 npm install @stablenotes/client
+```
+
+```sh
 yarn add @stablenotes/client
+```
+
+```sh
 pnpm add @stablenotes/client
+```
+
+```sh
 bun add @stablenotes/client
 ```
 
