@@ -136,7 +136,7 @@ if (result.error) {
 }
 ```
 
-Alternatively, the private key object can be an object with a hex or base64 encoded string as well as the encoding type. The string can be generated from `client.getWalletString`
+Alternatively, the private key object can be an object with a hex or base64 encoded string as well as the encoding type. The string can be generated from `Client.getWalletString`
 
 ```js
 await client1.register("USD");
